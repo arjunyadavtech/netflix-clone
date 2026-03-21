@@ -1,4 +1,3 @@
-
 const faqs = [
     {
         question: "What is Netflix?",
@@ -33,108 +32,54 @@ const faqs = [
 ];
 
 
-const container = document.getElementById("faq-container");
-
-faqs.forEach(faq => {
-
-    // 1. Create main box
-    const box = document.createElement("div");
-    box.classList.add("faqbox");
-
-    // 2. Add inner HTML
-    box.innerHTML = `
-        <div class="faq-question">
-            <span>${faq.question}</span>
-            <svg class="faq-icon" width="24" height="24">
-                <path d="M12 4V20 M4 12H20" stroke="white" stroke-width="2"/>
-            </svg>
-        </div>
-
-        <div class="faq-answer">
-            ${faq.answer}
-        </div>
-    `;
-
-    // 4. Add to DOM 
-    faqContainer.appendChild(box);
-});
 
 
-// 4. ADD BEHAVIOR (EVENT DELEGATION)
-container.addEventListener("click", (e) => {
+function createFAQ(container, faqs) {
+    if (!container) {
+        console.error("Container not found");
+        return;
+    }
 
-    // find clicked faqbox
+    faqs.forEach(faq => {
+
+        const box = document.createElement("div");
+        box.classList.add("faqbox");
+
+        box.innerHTML = `
+            <div class="faq-question">
+                <span>${faq.question}</span>
+                <svg class="faq-icon" width="24" height="24">
+                    <path d="M12 4V20 M4 12H20" stroke="white" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <div class="faq-answer">
+                ${faq.answer}
+            </div>
+        `;
+
+        container.appendChild(box);
+    });
+
+    container.addEventListener("click", (e) => {
+
     const box = e.target.closest(".faqbox");
-
-    // if clicked outside, ignore
     if (!box) return;
 
-    // get all boxes
     const allBoxes = container.querySelectorAll(".faqbox");
 
-    // close others
     allBoxes.forEach(item => {
         if (item !== box) {
             item.classList.remove("active");
         }
     });
 
-    // toggle current
     box.classList.toggle("active");
-});
+    });
+}
 
 
-// function createFAQItem(faq) {
-//     const box = document.createElement("div");
-//     box.classList.add("faqbox");
+const container = document.getElementById("faq-container");
 
-//     box.innerHTML = `
-//         <div class="faq-question">
-//             <span>${faq.question}</span>
-//             <svg class="faq-icon" width="24" height="24">
-//                 <path d="M12 4V20 M4 12H20" stroke="white" stroke-width="2"/>
-//             </svg>
-//         </div>
+createFAQ(container, faqs);
 
-//         <div class="faq-answer">
-//             ${faq.answer}
-//         </div>
-//     `;
-
-//     // Add behavior
-//     box.addEventListener("click", () => {
-
-//         document.querySelectorAll(".faqbox").forEach(item => {
-//             if (item !== box) {
-//                 item.classList.remove("active");
-//             }
-//         });
-
-//         box.classList.toggle("active");
-//     });
-
-//     return box;
-// }
-
-
-// faqBoxes.forEach(box => {
-//     const answer = box.querySelector(".faq-answer");
-
-//     box.addEventListener("click", () => {
-
-//         faqBoxes.forEach(item => {
-//             if (item !== box) {
-//                 item.classList.remove("active");
-//                 item.querySelector(".faq-answer").style.maxHeight = null;
-//             }
-//         });
-
-//         box.classList.toggle("active");
-
-//         if (box.classList.contains("active")) {
-//             answer.style.maxHeight = answer.scrollHeight + "px";
-//         } else {
-//             answer.style.maxHeight = null;
-//         }
-//     });
-// });
