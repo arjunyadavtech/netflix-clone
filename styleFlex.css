@@ -269,9 +269,6 @@ section.first > div :nth-child(2){
     margin: 34px auto;
     cursor: pointer;
 
-    border-radius: 6px;
-    overflow: hidden; /* important */
-
     transition: all 1s ease out ;
 }
 
